@@ -82,4 +82,38 @@ class ManagerTest {
         Product[] expected = {bookFirst, bookSecond, bookThree, bookFour, smartphone0, smartphone2, smartphone3};
         assertArrayEquals(expected, actual);
     }
+    @Test
+    void deleteRepoNotId() {
+        Book bookFirst = new Book(1, "Первый", 1000, "111", "First");
+        Book bookSecond = new Book(2, "Второй", 1500, "222", "Second");
+        Book bookThree = new Book(3, "Третий", 2000, "333", "Three");
+        Book bookFour = new Book(4, "Четвёртый", 2500, "444", "Four");
+
+        ProductRepository repo = new ProductRepository();
+
+        repo.save(bookFirst);
+        repo.save(bookSecond);
+        repo.save(bookThree);
+        repo.save(bookFour);
+        assertThrows(NotFoundException.class, () -> {
+            repo.removeById(6);
+        });
+    }
+    @Test
+    void deleteRepoId() {
+        Book bookFirst = new Book(1, "Первый", 1000, "111", "First");
+        Book bookSecond = new Book(2, "Второй", 1500, "222", "Second");
+        Book bookThree = new Book(3, "Третий", 2000, "333", "Three");
+        Book bookFour = new Book(4, "Четвёртый", 2500, "444", "Four");
+
+        ProductRepository repo = new ProductRepository();
+
+        repo.save(bookFirst);
+        repo.save(bookSecond);
+        repo.save(bookThree);
+        repo.save(bookFour);
+        assertThrows(NotFoundException.class, () -> {
+            manager.dall(2);
+        });
+    }
 }
